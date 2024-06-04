@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.JobtitleMapper">
+    <select id="jobtitleList" resultType="jobtitles">
+        select*from jobtitles
+        <where>
+        <if test="jobtitles!=null and jobtitles!=''">
+            and   jobtitles like concat('%',concat(#{jobtitles},'%'))
+        </if>
+        </where> ORDER BY jobtitleId dasc
+    </select>
+    <insert id="addJobtitle" parameterType="jobtitles">
+        insert into jobtitles(jobtitles,jobtitleId)values(#{jobtitles},#{jobtitleId})
+    </insert>
+    <update id="editJobtitle" parameterType="jobtitles">
+        update jobtitles set jobtitles=#{jobtitles},jobtitleId=#{jobtitleId} where jobtitleId=#{jobtitleId}
+    </update>
+    <update id="deleteJobtitle" parameterType="Integer">
+        delete from Jobtitles where jobtitleId=#{jobtitleId}
+    </update>
+    <select id="count" resultType="int">
+        select count(*) from jobtitles where jobtitles =#{jobtitles}
+    </select>
+</mapper>
